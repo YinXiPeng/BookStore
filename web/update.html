@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="js/vuejs-2.5.16.js"></script>
+    <script src="js/axios-0.18.0.js"></script>
+</head>
+<body>
+
+<div id="app">
+    <form action="/book" method="post">
+        <input type="text" name="bid" placeholder="bid" :value="tableData[0].bid"><br/>
+        <input type="txt" name="bname" placeholder="bname" :value="tableData[0].bname"><br/>
+        <input type="txt" name="author" placeholder="author" :value="tableData[0].author"><br/>
+        <input type="txt" name="price" placeholder="price" :value="tableData[0].price"><br/>
+        <input type="submit" value="add">
+    </form>
+
+</div>
+<script>
+    var vm = new Vue({
+        el: "#app",
+        data:{
+            tableData:[],
+
+        },
+
+        created(){
+            var url=document.location.href
+            var urlList=url.split("=");
+            var a=urlList[urlList.length-1].split('.')[0];
+            axios.get("book?method=queryId&bid="+a).then(response=>{
+                vm.tableData = response.data;
+            });
+        }
+    });
+
+</script>
+</body>
+</html>
